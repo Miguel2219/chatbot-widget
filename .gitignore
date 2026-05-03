@@ -39,3 +39,5 @@ dist/
 
 # Dependencies
 node_modules/
+
+CLAUDE.md

@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lucide-preact": "^1.7.0",
     "preact": "^10.27.2"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.2",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "vite-plugin-css-injected-by-js": "^3.5.2"
   }
 }

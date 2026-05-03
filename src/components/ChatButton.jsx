@@ -1,5 +1,10 @@
+import { MessageCircleMore } from 'lucide-preact';
+
 export default function ChatButton({onClick, isOpen}) {
     return (
-        <button onClick={onClick}>{isOpen ? 'Ocultar' : 'Mostrar'}</button>
+        <button className='chat-button' onClick={onClick}>
+            <MessageCircleMore size={24} color='white'></MessageCircleMore>
+        </button>
     )
+
 }

@@ -1,13 +1,22 @@
-import { useState, useRef } from 'preact/hooks'
+import { useState, useRef, useEffect } from 'preact/hooks'
 import ChatButton from './components/ChatButton'
 import ChatWindow from './components/ChatWindow'
-import { generateSessionId, sendMessage } from './api/chatApi'
+import { generateSessionId, getBot, sendMessage } from './api/chatApi'
 
 export default function Widget({ botId, apiUrl }) {
     const [isOpen, setIsOpen] = useState(false)
     const [botTyping, setBotTyping] = useState(false)
     const [messages, setMessages] = useState([])
     const sessionId = useRef(generateSessionId())
+    const [botName, setBotName] = useState('')
+
+    useEffect(() => {
+        const fetchBotName = async () => {
+            const data = await getBot(apiUrl, botId)
+            setBotName(data.name)
+        }
+        if (botId) fetchBotName()
+    }, [botId])
 
     function handleToggle() {
         setIsOpen(!isOpen)
@@ -18,7 +27,8 @@ export default function Widget({ botId, apiUrl }) {
         setBotTyping(true)
         try {
             const data = await sendMessage(apiUrl, botId, sessionId.current, text)
-            setMessages(prev => [...prev, { role: "assistant", content: data.message, id: crypto.randomUUID() }])
+            console.log(data);
+            setMessages(prev => [...prev, { role: "assistant", content: data.response, id: crypto.randomUUID() }])
         } catch (error) {
             console.error(error)  
         } finally {
@@ -33,6 +43,7 @@ export default function Widget({ botId, apiUrl }) {
                 botTyping={botTyping}
                 handleSendMessage={handleSendMessage}
                 handleToggle={handleToggle}
+                botName={botName}
             />}
             <ChatButton
                onClick={handleToggle} 
