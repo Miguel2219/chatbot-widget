@@ -27,7 +27,6 @@ export default function Widget({ botId, apiUrl }) {
         setBotTyping(true)
         try {
             const data = await sendMessage(apiUrl, botId, sessionId.current, text)
-            console.log(data);
             setMessages(prev => [...prev, { role: "assistant", content: data.response, id: crypto.randomUUID() }])
         } catch (error) {
             console.error(error)  
